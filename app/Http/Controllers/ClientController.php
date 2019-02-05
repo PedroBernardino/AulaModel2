@@ -104,6 +104,17 @@ class ClientController extends Controller
         return response()->json(['Foi!']);
     }
 
+    public function detachLecture($id, $lecture_id)
+    {
+        $client = Client::findOrFail($id);
+
+        $lecture = Lecture::findOrFail($lecture_id);
+
+        $lecture->removeClient($id);
+
+        return response()->json(['DELETADO!']);
+    }
+
     public function getLectures($id)
     {
         $client = Client::find($id);

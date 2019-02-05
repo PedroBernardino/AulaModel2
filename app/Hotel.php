@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Hotel extends Model
 {
     public function rooms(){
-        $this->hasMany('App\Room');
+        return $this->hasMany('App\Room');
     }
 
     public function vacanciesRemaining(){
 
-        $rooms = $this->rooms();
+        $rooms = $this->rooms;
         $vacancies = 0;
 
         foreach ($rooms as $room){

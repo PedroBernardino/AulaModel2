@@ -9,12 +9,12 @@ use App\Lecture;
 class Client extends Model
 {
     //exemplo de serialization
-    //protected $hidden = ['email'];
+    protected $hidden = ['email'];
 
     //exemplo de acessor
     /*public function getNameAttribute($value)
     {
-        return "{$value} malandro";
+        return strtolower($value);
     }*/
 
 
@@ -23,14 +23,15 @@ class Client extends Model
     {
         return "{$this->name} - {$this->email}";
     }
+
     protected $appends = ['all_info'];
 
 
     //exemplo de mutator
-    public function setNameAttribute($value)
+    /*public function setNameAttribute($value)
     {
         $this->attributes['name'] = strtolower($value);
-    }
+    }*/
 
 
     //reserva o quarto ou falha

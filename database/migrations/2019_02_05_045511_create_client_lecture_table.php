@@ -13,17 +13,17 @@ class CreateClientLectureTable extends Migration
      */
     public function up()
     {
-        Schema::create('lectures_clients', function (Blueprint $table) {
+        Schema::create('client_lecture', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lecture_id')->unsigned();
             $table->integer('client_id')->unsigned();
             $table->timestamps();
         });
 
-        Schema::table('lectures_clients',function(Blueprint $table)  {
+        Schema::table('client_lecture',function(Blueprint $table)  {
             $table->foreign('lecture_id')->references('id')->on('lectures')->onDelete('cascade');
         });
-        Schema::table('lectures_clients',function(Blueprint $table)  {
+        Schema::table('client_lecture',function(Blueprint $table)  {
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
         });
     }

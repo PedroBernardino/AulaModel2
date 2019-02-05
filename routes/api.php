@@ -25,6 +25,7 @@ Route::apiResource('rooms', 'RoomController');
 Route::apiResource('clients', 'ClientController');
 Route::put('client/insertRoom/{id}/{room_id}', 'ClientController@insertRoom');
 Route::put('client/insertLecture/{id}/{lecture_id}', 'ClientController@insertLecture');
+Route::delete('client/detachLecture/{id}/{lecture_id}', 'ClientController@detachLecture');
 Route::get('client/getLectures/{id}', 'ClientController@getLectures');
 
 Route::apiResource('lectures', 'LectureController');
