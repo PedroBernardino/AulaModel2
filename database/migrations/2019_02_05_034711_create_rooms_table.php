@@ -15,7 +15,16 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('type');
+            $table->longText('description');
+            $table->integer('vacancies');
+            $table->integer('vacancies_remaining');
+            $table->integer('hotel_id')->unsigned();
             $table->timestamps();
+        });
+
+        Schema::table('rooms',function(Blueprint $table)  {
+            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
         });
     }
 
