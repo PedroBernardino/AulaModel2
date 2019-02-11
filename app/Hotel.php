@@ -10,6 +10,10 @@ class Hotel extends Model
         return $this->hasMany('App\Room');
     }
 
+    public function users(){
+        
+    }
+
     public function vacanciesRemaining(){
 
         $rooms = $this->rooms;

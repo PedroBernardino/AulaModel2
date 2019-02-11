@@ -69,10 +69,6 @@ class RoomController extends Controller
             $room->type = $request->type;
         if($request->description)
             $room->description = $request->description;
-        if($request->vacancies)
-            $room->vacancies = $request->vacancies;
-        if($request->vacancies_remaining)
-            $room->vacancies_remaining = $request->vacancies_remaining;
         if($request->address)
             $room->address = $request->address;
 
@@ -92,5 +88,39 @@ class RoomController extends Controller
         Room::destroy($id);
 
         return response()->json(['DELETADO']);
+    }
+
+    public function getUsers($id)
+    {
+        $room = Room::findOrFail($id);
+        return response()->json([$room->users]);
+    }
+
+    //Request recebe users como string com ids separados por vírgula Ex:
+    // 1,2,3
+    public function putInRoom(Request $request, $room_id)
+    {
+        $room = Room::findOrFail($room_id);
+
+        //pega user como string e separa pelas vírgulas os ids em um array
+        $users = explode(',',$request->users);
+
+        $room->newUsers($users);
+
+        return response()->json([$room->users, $room]);
+    }
+
+    //Request recebe users como string com ids separados por vírgula Ex:
+    // 1,2,3
+    public function removeOfRoom(Request $request, $room_id)
+    {
+        $room = Room::findOrFail($room_id);
+
+        //pega user como string e separa pelas vírgulas os ids em um array
+        $users = explode(',',$request->users);
+
+        $room->removeUsers($users);
+
+        return response()->json([$room->users, $room]);
     }
 }

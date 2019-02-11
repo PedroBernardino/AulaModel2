@@ -3,31 +3,43 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Client;
+use App\User;
 
 class Lecture extends Model
 {
-    public function clients(){
-       return $this->belongsToMany('App\Client');
+    public function User(){
+       return $this->belongsToMany('App\User');
     }
 
-    public function newClient($client_id){
 
-        $client = Client::findOrFail($client_id);
-//        dd($this, $lecture, $lecture_id);
-
-        $this->clients()->attach($client);
-
+    /**
+     * Adiciona novos usuários à palestra
+     *
+     * @param  array  $user_ids
+     * @return boolean
+     */
+    public function newUsers($user_ids){
+        foreach ($user_ids as $user_id) {
+            $user = User::findOrFail($user_id);
+//          dd($this, $lecture, $lecture_id);
+            $this->users()->attach($user);
+        }
         return true;
     }
 
-    public function removeClient($client_id){
 
-        $client = Client::findOrFail($client_id);
-//        dd($this, $lecture, $lecture_id);
-
-        $this->clients()->detach($client);
-
+    /**
+     * Remove usuários da palestra
+     *
+     * @param  array  $user_ids
+     * @return boolean
+     */
+    public function removeUsers($user_ids){
+        foreach ($user_ids as $user_id) {
+            $user = User::findOrFail($user_id);
+//          dd($this, $lecture, $lecture_id);
+            $this->users()->detach($user);
+        }
         return true;
     }
 

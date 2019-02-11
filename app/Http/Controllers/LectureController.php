@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Lecture;
+use Nexmo\Response;
 
 class LectureController extends Controller
 {
@@ -89,9 +90,45 @@ class LectureController extends Controller
         return response()->json(['DELETADO']);
     }
 
-    public function getClients($id)
+    /**
+     * Retorna os usuários inscritos na palestra
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getUsers($id)
     {
-        $lecture = Lecture::find($id);
-        return response()->json([$lecture->clients]);
+        $lecture = Lecture::findOrFail($id);
+        return response()->json([$lecture->users]);
     }
+
+
+    //Request recebe users como string com ids separados por vírgula Ex:
+    // 1,2,3
+    public function subInLecture(Request $request, $lecture_id)
+    {
+        $lecture = Lecture::findOrFail($lecture_id);
+
+        //pega user como string e separa pelas vírgulas os ids em um array
+        $users = explode(',',$request->users);
+
+        $lecture->newUsers($users);
+
+        return response()->json([$lecture->users]);
+    }
+
+    //Request recebe users como string com ids separados por vírgula Ex:
+    // 1,2,3
+    public function unsubInLecture(Request $request, $lecture_id)
+    {
+        $lecture = Lecture::findOrFail($lecture_id);
+
+        //pega user como string e separa pelas vírgulas os ids em um array
+        $users = explode(',',$request->users);
+
+        $lecture->removeUsers($users);
+
+        return response()->json([$lecture->users]);
+    }
+
 }
