@@ -20,6 +20,7 @@ class CreateHotelsTable extends Migration
             $table->longText('description');
             $table->string('telephone');
             $table->string('address');
+            $table->string('photo');
             $table->timestamps();
         });
     }
