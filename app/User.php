@@ -62,6 +62,10 @@ class User extends Authenticatable
     }*/
 
 
+    public function creditCard(){
+        return $this->hasOne('App\CreditCard');
+    }
+
     //retorna o quarto
     public function room(){
         return $this->belongsTo('App\Room');
@@ -69,21 +73,18 @@ class User extends Authenticatable
 
     //reserva o quarto ou falha
     public function reserveRoom($room_id){
-        $room = Room::findOrFail($room_id);
 
-        $room->newUsers([$this->id]);
-
+        $this->room_id = $room_id;
+        $this->save();
         return true;
     }
 
     public function removeRoom(){
-        $room = $this->room;
 
-        $room->removeUsers([$this->id]);
-
+        $this->room_id = null;
+        $this->save();
         return true;
     }
-
 
 
     //retorna as atividades do cidadao
@@ -92,21 +93,17 @@ class User extends Authenticatable
     }
 
     //se inscreve em uma palestra
-    public function subInLecture($lecture_id)
+    public function subscribeInLecture($lecture_id)
     {
-        $lecture = Lecture::findOrFail($lecture_id);
-        $this->lectures()->attach($lecture);
+        $this->lectures()->attach($lecture_id);
         return true;
     }
 
-    //se desinscreve de uma palestra obs:testar se buga se desinscrever sem estar inscrito
-    public function unsubInLecture($lecture_id)
+    //se desinscreve de uma palestra
+    public function unsubscribeInLecture($lecture_id)
     {
-        $lecture = Lecture::findOrFail($lecture_id);
-        $this->lectures()->detach($lecture);
-
+        $this->lectures()->detach($lecture_id);
         return true;
     }
-
 
 }
